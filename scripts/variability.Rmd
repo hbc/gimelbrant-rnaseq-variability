@@ -93,3 +93,12 @@ write.table(rownames(sig), quote=FALSE, sep="\t", row.names=FALSE, col.names=FAL
             file="sig_genes.txt")
 rownames(sig)
 ```
+
+```{r}
+out_df = data.frame(gene=rownames(ed), log2deviance=log2(varFitRatio), pval=pval,
+                    adj.pval=adj.pval)
+out_df = out_df[order(out_df$pval, decreasing=FALSE),]
+out_df$sig = out_df$adj.pval < 0.05
+write.table(out_df, sep="\t", quote=FALSE, row.names=FALSE, col.names=TRUE,
+            file="sig_results.tsv")
+```
